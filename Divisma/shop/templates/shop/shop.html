@@ -8,10 +8,10 @@
 	<!-- Page info -->
 	<div class="page-top-info">
 		<div class="container">
-			<h4>Shop PAge</h4>
+			<h4>Shop Page</h4>
 			<div class="site-pagination">
-				<a href="">Home</a> /
-				<a href="">Shop</a> /
+				<a href="{% url 'home' %}">Home /</a> 
+				<a href="{% url 'shop' %}">Shop</a>
 			</div>
 		</div>
 	</div>
@@ -24,37 +24,12 @@
 			<div class="row">
 				<div class="col-lg-3 order-2 order-lg-1">
 					<div class="filter-widget">
-						<h2 class="fw-title">Categories</h2>
-						<ul class="category-menu">
-							{% for item in product %}
-							<li><a href="#">{{ item.title }}</a>
+						
+						{% include 'inc/shop/_categories.html' %}
 
-							{% endfor %}
-							<!--								
-									<ul class="sub-menu">
-									<li><a href="#">Midi Dresses <span>(2)</span></a></li>
-									<li><a href="#">Maxi Dresses<span>(56)</span></a></li>
-									<li><a href="#">Prom Dresses<span>(36)</span></a></li>
-									<li><a href="#">Little Black Dresses <span>(27)</span></a></li>
-									<li><a href="#">Mini Dresses<span>(19)</span></a></li>
-								</ul>
-								
-							</li>
-							
-							<li><a href="#">Man Wear</a>					
-									<ul class="sub-menu">
-									<li><a href="#">Midi Dresses <span>(2)</span></a></li>
-									<li><a href="#">Maxi Dresses<span>(56)</span></a></li>
-									<li><a href="#">Prom Dresses<span>(36)</span></a></li>
-								</ul>							
-							</li>
-							<li><a href="#">Children</a></li>
-							<li><a href="#">Bags & Purses</a></li>
-							<li><a href="#">Eyewear</a></li>
-							<li><a href="#">Footwear</a></li>
-						    -->
-						</ul>
 					</div>
+
+					<!--Price Filter-->
 					<div class="filter-widget mb-0">
 						<h2 class="fw-title">refine by</h2>
 						<div class="price-range-wrap">
@@ -74,47 +49,10 @@
                             </div>
                         </div>
 					</div>
-					<div class="filter-widget mb-0">
-						<h2 class="fw-title">color by</h2>
-						<div class="fw-color-choose">
-							<div class="cs-item">
-								<input type="radio" name="cs" id="gray-color">
-								<label class="cs-gray" for="gray-color">
-									<span>(3)</span>
-								</label>
-							</div>
-							<div class="cs-item">
-								<input type="radio" name="cs" id="orange-color">
-								<label class="cs-orange" for="orange-color">
-									<span>(25)</span>
-								</label>
-							</div>
-							<div class="cs-item">
-								<input type="radio" name="cs" id="yollow-color">
-								<label class="cs-yollow" for="yollow-color">
-									<span>(112)</span>
-								</label>
-							</div>
-							<div class="cs-item">
-								<input type="radio" name="cs" id="green-color">
-								<label class="cs-green" for="green-color">
-									<span>(75)</span>
-								</label>
-							</div>
-							<div class="cs-item">
-								<input type="radio" name="cs" id="purple-color">
-								<label class="cs-purple" for="purple-color">
-									<span>(9)</span>
-								</label>
-							</div>
-							<div class="cs-item">
-								<input type="radio" name="cs" id="blue-color" checked="">
-								<label class="cs-blue" for="blue-color">
-									<span>(29)</span>
-								</label>
-							</div>
-						</div>
-					</div>
+					
+					{% include 'inc/shop/_color.html' %}
+					
+					<!--Sizes-->
 					<div class="filter-widget mb-0">
 						<h2 class="fw-title">Size</h2>
 						<div class="fw-size-choose">
@@ -144,62 +82,16 @@
 							</div>
 						</div>
 					</div>
-					<div class="filter-widget">
-						<h2 class="fw-title">Brand</h2>
-						<ul class="category-menu">
-							<li><a href="#">Abercrombie & Fitch <span>(2)</span></a></li>
-							<li><a href="#">Asos<span>(56)</span></a></li>
-							<li><a href="#">Bershka<span>(36)</span></a></li>
-							<li><a href="#">Missguided<span>(27)</span></a></li>
-							<li><a href="#">Zara<span>(19)</span></a></li>
-						</ul>
-					</div>
+					
+					{% include 'inc/shop/_brand.html' %}
+
 				</div>
 
 				<div class="col-lg-9  order-1 order-lg-2 mb-5 mb-lg-0">
 					<div class="row">
 						
-						{% for item in product %}
-						<div class="col-lg-4 col-sm-6">
-							<div class="product-item">
-								<div class="pi-pic">
-									<div class="tag-sale">ON SALE</div>
-									<img src="{{ item.image.url }}" alt="">
-									<div class="pi-links">
-										<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-										<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-									</div>
-								</div>
-								<div class="pi-text">
-									<h6>${{ item.price }},00</h6>
-									<p>{{ item.title }}</p>
-								</div>
-							</div>
-						</div>
-						{% endfor %}
+						{% include 'inc/shop/_product_list.html' %}
 						
-						<!--
-						<div class="col-lg-4 col-sm-6">
-							<div class="product-item">
-								<div class="pi-pic">
-									<div class="tag-new">new</div>               #######
-									<img src="./img/product/2.jpg" alt="">
-									<div class="pi-links">
-										<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-										<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-									</div>
-								</div>
-								<div class="pi-text">
-									<h6>$35,00</h6>
-									<p>Black and White Stripes Dress</p>
-								</div>
-							</div>
-						</div>
-						-->
-						
-						
-
-
 						<div class="text-center w-100 pt-3">
 							<button class="site-btn sb-line sb-dark">LOAD MORE</button>
 						</div>

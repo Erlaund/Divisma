@@ -1,0 +1,21 @@
+{% load shop_tags %}
+
+<div class="filter-widget">
+    <h2 class="fw-title">Brand</h2>
+    <ul class="category-menu">
+        {% get_brands as brands %}
+        {% for item in brands %}
+        <input type="checkbox" name="sc" id="brand">
+        <label for="brand">{{ item.title }} <span>(2)</span></label><br>
+
+        <li><a href="{{ item.get_absolute_url }}">{{ item.title }} <span>(2)</span></a></li> -->
+        {% endfor %}
+        <!--
+        <li><a href="#">Abercrombie & Fitch <span>(2)</span></a></li>
+        <li><a href="#">Asos<span>(56)</span></a></li>
+        <li><a href="#">Bershka<span>(36)</span></a></li>
+        <li><a href="#">Missguided<span>(27)</span></a></li>
+        <li><a href="#">Zara<span>(19)</span></a></li>
+        -->
+    </ul>
+</div>

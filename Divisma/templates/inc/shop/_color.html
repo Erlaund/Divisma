@@ -1,0 +1,57 @@
+{% load shop_tags %}
+
+{% comment %}
+<div class="filter-widget mb-0">
+    <h2 class="fw-title">color by</h2>
+    <div class="fw-color-choose">
+        {% get_colors as colors %}
+        {% for item in colors %}
+        <div class="cs-item">
+            <input type="radio" name="cs" id="gray-color">
+            <label for="gray-color">
+                <span>(3)</span>
+            </label>
+        </div>
+        {% endfor %}
+           
+    <!--
+        <div class="cs-item">
+            <input type="radio" name="cs" id="gray-color">
+            <label class="cs-gray" for="gray-color">
+                <span>(3)</span>
+            </label>
+        </div>
+        <div class="cs-item">
+            <input type="radio" name="cs" id="orange-color">
+            <label class="cs-orange" for="orange-color">
+                <span>(25)</span>
+            </label>
+        </div>
+        <div class="cs-item">
+            <input type="radio" name="cs" id="yollow-color">
+            <label class="cs-yollow" for="yollow-color">
+                <span>(112)</span>
+            </label>
+        </div>
+        <div class="cs-item">
+            <input type="radio" name="cs" id="green-color">
+            <label class="cs-green" for="green-color">
+                <span>(75)</span>
+            </label>
+        </div>
+        <div class="cs-item">
+            <input type="radio" name="cs" id="purple-color">
+            <label class="cs-purple" for="purple-color">
+                <span>(9)</span>
+            </label>
+        </div>
+        <div class="cs-item">
+            <input type="radio" name="cs" id="blue-color" checked="">
+            <label class="cs-blue" for="blue-color">
+                <span>(29)</span>
+            </label>
+        </div>
+    -->
+    </div>
+</div>
+{% endcomment %}

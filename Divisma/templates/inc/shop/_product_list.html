@@ -1,0 +1,46 @@
+                    {% if product == 0 %}
+						<p>list is empty</p>
+					{% else %}
+						{% for item in product %}
+							{% if item.is_available %}
+							<div class="col-lg-4 col-sm-6">
+									<div class="product-item">
+									<div class="pi-pic">
+										{% if item.is_OnSale %}
+										<div class="tag-sale">ON SALE</div>
+										{% endif %}
+										<a href="{{ item.get_absolute_url }}"><img src="{{ item.image_core.url }}" alt=""></a>
+										<div class="pi-links">
+											<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+											<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+										</div>
+									</div>
+									<div class="pi-text">
+										<h6>${{ item.price }},00</h6>
+										<a href="{{ item.get_absolute_url }}"><p>{{ item.title }}</p></a>
+									</div>
+								</div>
+							</div>
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+
+                        <!--
+						<div class="col-lg-4 col-sm-6">
+							<div class="product-item">
+								<div class="pi-pic">
+									<div class="tag-new">new</div>               #######
+									<img src="./img/product/2.jpg" alt="">
+									<div class="pi-links">
+										<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+										<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+									</div>
+								</div>
+								<div class="pi-text">
+									<h6>$35,00</h6>
+									<p>Black and White Stripes Dress</p>
+								</div>
+							</div>
+						</div>
+						-->
+						

@@ -1,8 +1,12 @@
+from email.policy import default
 import imp
 from turtle import title
+from unicodedata import category
 from django.db import models
 from django.forms import CharField
 from django.urls import reverse
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 
 
 
@@ -31,17 +35,66 @@ from django.urls import reverse
 '''
 
 class Product(models.Model):
-
-    title = models.CharField(max_length=100, verbose_name='Product name')
-    descriptioin = models.TextField(verbose_name='Product descritption')
+    title = models.CharField(max_length=100, verbose_name='Product name', default='Product name')
+    description = models.TextField(verbose_name='Product descritption', default = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra tempor so dales. Phasellus sagittis auctor gravida. Integer bibendum sodales arcu id te mpus. Ut consectetur lacus leo, non scelerisque nulla euismod nec. Approx length 66cm/26 (Based on a UK size 8 sample) Mixed fibres The Model wears a UK size 8/ EU size 36/ US size 4 and her height is 5.8')
     price = models.IntegerField(verbose_name='Price')
-    color = models.ForeignKey('Color', on_delete=models.CASCADE)
-    size = models.CharField(max_length=100, blank=True, verbose_name='Sizes')
-    brand = models.ForeignKey('Brand', on_delete=models.CASCADE)
     is_available = models.BooleanField(default=True, verbose_name='Available')
-    category = models.ForeignKey('Category', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='product-photos/%Y/%m/%d/')
+    is_OnSale = models.BooleanField(default=False, verbose_name='On sale')
     slug = models.SlugField(max_length=100, verbose_name='Url', unique=True, default=None)
+
+    #filter fields
+    color = models.ForeignKey('Color', on_delete=models.DO_NOTHING)
+    size = models.ManyToManyField('Size')
+    brand = models.ForeignKey('Brand', on_delete=models.CASCADE)
+    category = models.ForeignKey('Category', on_delete=models.CASCADE)
+    sub_category = models.ForeignKey('shop.SubCategory', on_delete=models.DO_NOTHING, default=1)
+
+    #source images which you loading
+    image = models.ImageField(upload_to='product-photos/%Y/%m/%d/', default='product-photos/default.jpg')
+    image1 = models.ImageField(upload_to='product-photos/%Y/%m/%d/', default='product-photos/default.jpg')
+    image2 = models.ImageField(upload_to='product-photos/%Y/%m/%d/', default='product-photos/default.jpg')
+    image3 = models.ImageField(upload_to='product-photos/%Y/%m/%d/', default='product-photos/default.jpg')
+    
+    #core image which display in shop
+    image_core = ImageSpecField(source='image',
+                                        processors=[ResizeToFill(500,775)],
+                                        format='JPEG',
+                                        options={'quality': 100})
+    
+    #images which displayed on single product page
+    image_resize = ImageSpecField(source='image',
+                                        processors=[ResizeToFill(1000,1358)],
+                                        format='JPEG',
+                                        options={'quality': 100})
+    image1_resize = ImageSpecField(source='image1',
+                                        processors=[ResizeToFill(1000,1358)],
+                                        format='JPEG',
+                                        options={'quality': 100})
+    image2_resize = ImageSpecField(source='image2',
+                                        processors=[ResizeToFill(1000,1358)],
+                                        format='JPEG',
+                                        options={'quality': 100})
+    image3_resize = ImageSpecField(source='image3',
+                                        processors=[ResizeToFill(1000,1358)],
+                                        format='JPEG',
+                                        options={'quality': 100})
+    #and their thumbs
+    thumb_image = ImageSpecField(source='image',
+                                        processors=[ResizeToFill(116,116)],
+                                        format='JPEG',
+                                        options={'quality': 80})
+    thumb_image1 = ImageSpecField(source='image1',
+                                        processors=[ResizeToFill(116,116)],
+                                        format='JPEG',
+                                        options={'quality': 80})
+    thumb_image2 = ImageSpecField(source='image2',
+                                        processors=[ResizeToFill(116,116)],
+                                        format='JPEG',
+                                        options={'quality': 80})
+    thumb_image3 = ImageSpecField(source='image3',
+                                        processors=[ResizeToFill(116,116)],
+                                        format='JPEG',
+                                        options={'quality': 80})
 
     def __str__(self):
         return self.title
@@ -49,10 +102,25 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('product', kwargs={"slug": self.slug})
 
+
+class Size(models.Model):
+    title = models.CharField(max_length=40, db_index=True, verbose_name='Size')
+    slug = models.SlugField(max_length=40, verbose_name='Url', unique=True, default=None)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('size', kwargs={"slug": self.slug})
+
+    class Meta:
+        verbose_name_plural = 'Sizes'
+
+
 class Category(models.Model):
     title = models.CharField(max_length=40, db_index=True, verbose_name='Category')
     slug = models.SlugField(max_length=40, verbose_name='Url', unique=True, default=None)
-
+    
     def __str__(self):
         return self.title
 
@@ -61,6 +129,20 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = 'Categories'
+
+class SubCategory(models.Model):
+    title = models.CharField(max_length=40, db_index=True, verbose_name='Sub Category')
+    category = models.ForeignKey('Category', on_delete=models.DO_NOTHING)
+    slug = models.SlugField(max_length=40, verbose_name='Url', unique=True, default=None)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('sub_category', kwargs={"slug": self.slug})
+
+    class Meta:
+        verbose_name_plural = 'Sub categories'
 
 
 class Color(models.Model):

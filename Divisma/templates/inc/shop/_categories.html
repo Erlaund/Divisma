@@ -1,0 +1,20 @@
+{% load shop_tags %}
+    <h2 class="fw-title">Categories</h2>
+	<ul class="category-menu">
+        {% get_categories as categories %}
+		{% get_subCategories as subCategories %}
+		
+		{% for categ in categories %}
+			{% if categ.id != 7 %} <!--Except the category with title 'No Category'-->
+				<li><a href="{{ categ.get_absolute_url }}">{{ categ.title }}</a>
+					<ul class="sub-menu">
+							{% for subCateg in subCategories %}	
+								{% if subCateg.category_id == categ.id %}
+								<li><a href="#">{{ subCateg.title  }}<span>(2)</span></a></li>
+								{% endif %}
+							{% endfor %}
+					</ul>
+				</li>
+			{% endif %}
+		{% endfor %}
+	</ul>
