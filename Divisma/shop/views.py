@@ -18,6 +18,7 @@ class ShopPage(ListView):
     model = Product
     template_name = 'shop/shop.html'
     context_object_name = 'product'
+    allow_empty = True	
 
     def get_queryset(self):
         return Product.objects.filter(is_available=True)
